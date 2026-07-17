@@ -71,10 +71,20 @@ for j in tickers:
 df_pivoted = pd.DataFrame(table_rows).pivot(index=["Statement Type", "Metric"], columns="Ticker", values="Value").reset_index()
 
 # --- GEMINI ANALYSIS & REPORT GENERATION ---
+# --- GEMINI ANALYSIS ---
 def run_pipeline(df):
-    # 1. Ask Gemini
     client = genai.Client(api_key=GEMINI_API_KEY)
-    prompt = f"Analyze this financial data and provide insights:\n{df.to_string()}"
+    
+    # NEW PROMPT: Force HTML output
+    prompt = f"""
+    Analyze this financial data and provide insights. 
+    Format your entire response as valid HTML fragments (use <h3>, <p>, <ul>, <li> tags). 
+    Do not use Markdown. Do not include a code block wrapper.
+    
+    Data:
+    {df.to_string()}
+    """
+    
     response = client.models.generate_content(model=GEMINI_MODEL, contents=prompt)
     
     # 2. Save as HTML
