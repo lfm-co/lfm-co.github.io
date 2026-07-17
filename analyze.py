@@ -94,26 +94,22 @@ def run_pipeline(df):
         <head>
             <title>Financial Report</title>
             <style>
-                body {{ font-family: 'Segoe UI', Tahoma, sans-serif; margin: 50px; line-height: 1.6; background-color: #f4f4f9; }}
-                .container {{ background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }}
-                table {{ border-collapse: collapse; width: 100%; margin-bottom: 30px; border: 1px solid #ddd; }}
-                th, td {{ border: 1px solid #eee; padding: 12px; text-align: left; }}
-                th {{ background-color: #f8f9fa; font-weight: bold; }}
-                /* Style for the Gemini Insights */
-                .gemini-box {{ background: #ffffff; padding: 30px; border-top: 4px solid #4285f4; border-radius: 4px; }}
-                h1, h2, h3 {{ color: #202124; }}
-                pre {{ background: #f0f0f0; padding: 10px; overflow-x: auto; }}
+                body {{ font-family: sans-serif; margin: 40px; background: #f4f4f9; }}
+                .container {{ background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }}
+                table {{ border-collapse: collapse; width: 100%; margin: 20px 0; }}
+                th, td {{ border: 1px solid #ddd; padding: 10px; text-align: left; }}
+                /* Gemini-generated HTML styles */
+                h3 {{ color: #4285f4; border-bottom: 2px solid #eee; padding-bottom: 10px; }}
             </style>
         </head>
         <body>
             <div class="container">
                 <a href="index.html">← Back to Home</a>
                 <h1>Quarterly Financial Analysis</h1>
-                {df.to_html(index=False, classes='table table-striped')}
+                {df.to_html(index=False)}
                 
-                <div class="gemini-box">
-                    <h2>Gemini Insights</h2>
-                    {response.text.replace('###', '<h3>').replace('**', '<strong>').replace(chr(10), '<br>')}
+                <div class="gemini-insights">
+                    {response.text}
                 </div>
             </div>
         </body>
